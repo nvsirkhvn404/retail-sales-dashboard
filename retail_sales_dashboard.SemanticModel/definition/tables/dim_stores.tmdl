@@ -1,0 +1,51 @@
+table dim_stores
+	lineageTag: 9dd928ed-ad76-45dc-bf37-4253e1efe903
+
+	column store_id
+		dataType: string
+		lineageTag: b4a3bd52-2c6c-4d8f-aafc-0e11140f6adf
+		summarizeBy: none
+		sourceColumn: store_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column store_name
+		dataType: string
+		lineageTag: a6598676-62af-43e8-84e4-14dd30323f50
+		summarizeBy: none
+		sourceColumn: store_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: adb0fc8d-2133-4f19-8ac3-22c552c080b9
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column region
+		dataType: string
+		lineageTag: 1138e5c3-4031-44fe-9f7c-21f43ee57a33
+		summarizeBy: none
+		sourceColumn: region
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_stores = m
+		mode: import
+		queryGroup: dimensions
+		source =
+				let
+				    Source = Stores,
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"StoreID", type text}, {"StoreName", type text}, {"City", type text}, {"Region", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"StoreID", "store_id"}, {"StoreName", "store_name"}, {"City", "city"}, {"Region", "region"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

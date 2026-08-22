@@ -1,0 +1,69 @@
+table dim_products
+	lineageTag: d2bf1904-7df5-489b-97ad-194abf76b370
+
+	column product_id
+		dataType: string
+		lineageTag: 19112546-aa66-422e-a2cb-f7b1029e9835
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_name
+		dataType: string
+		lineageTag: 039cca25-4496-409a-9d2e-aa0fbd4aa74b
+		summarizeBy: none
+		sourceColumn: product_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		lineageTag: ba783439-ed09-468d-b89e-493e6e82f9cc
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	column subcategory
+		dataType: string
+		lineageTag: 67d1dbef-6a47-4ac5-a0d1-e151d2be8dae
+		summarizeBy: none
+		sourceColumn: subcategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_price
+		dataType: double
+		lineageTag: e3b26a0c-5fad-401c-8338-171849c48d40
+		summarizeBy: none
+		sourceColumn: unit_price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column cost_price
+		dataType: double
+		lineageTag: d2b529b7-58b1-453e-94cf-67f2f4fe6f81
+		summarizeBy: none
+		sourceColumn: cost_price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition dim_products = m
+		mode: import
+		queryGroup: dimensions
+		source =
+				let
+				    Source = Products,
+				    #"Renamed Columns" = Table.RenameColumns(Source,{{"ProductID", "product_id"}, {"ProductName", "product_name"}, {"Category", "category"}, {"SubCategory", "subcategory"}, {"UnitPrice", "unit_price"}, {"CostPrice", "cost_price"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

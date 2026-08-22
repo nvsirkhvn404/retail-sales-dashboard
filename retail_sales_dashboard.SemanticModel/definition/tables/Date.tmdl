@@ -1,0 +1,70 @@
+table Date
+	lineageTag: 1172c5ed-e475-407b-bd67-20d662047419
+
+	column Date
+		formatString: General Date
+		lineageTag: 65083c9e-8725-4a57-9699-6c1018cb30dd
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variation
+			isDefault
+			relationship: bd7d77fe-91d4-448f-9c14-44800747e31a
+			defaultHierarchy: LocalDateTable_217326c6-edd6-40ef-80cd-69e044bca5ae.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column year = YEAR('Date'[Date])
+		formatString: 0
+		lineageTag: 74597027-8341-435f-92d7-bcf18910dcf1
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_number = MONTH('Date'[Date])
+		formatString: 0
+		lineageTag: a3b21273-d590-458d-96ef-0106ee222efe
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_name = FORMAT('Date'[Date], "MMM")
+		lineageTag: 26b4252f-a615-4883-bec6-036afd1ff181
+		summarizeBy: none
+		sortByColumn: month_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column quarter = "Q" & QUARTER('Date'[Date])
+		lineageTag: 533ccd59-166d-4c48-9e82-976cd77e5855
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column year_month = FORMAT('Date'[Date], "MMM YYYY")
+		lineageTag: 65f0c3a2-8934-44d5-91f7-0548e0d343df
+		summarizeBy: none
+		sortByColumn: year_month_sort
+
+		annotation SummarizationSetBy = Automatic
+
+	column day_name = FORMAT('Date'[Date], "ddd")
+		lineageTag: 2876300d-e302-490e-bb9a-54e788f990c3
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column year_month_sort = YEAR('Date'[Date])*100 + MONTH('Date'[Date])
+		formatString: 0
+		lineageTag: e87f8bce-8ae7-4f45-a7df-fd6332d775d5
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Date = calculated
+		mode: import
+		source = CALENDAR(MIN(fact_transactions[date]), MAX(fact_transactions[date]))
+
+	annotation PBI_Id = 2c784437c4cc4ec2b247bdf413384dbe
+

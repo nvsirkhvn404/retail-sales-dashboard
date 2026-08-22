@@ -1,0 +1,139 @@
+table dim_customers
+	lineageTag: 9e7008a7-bf23-4913-b613-e5a020f575cb
+
+	column customer_id
+		dataType: string
+		lineageTag: e7e79112-031a-48fb-b23b-6cae9f2da691
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column first_name
+		dataType: string
+		lineageTag: c57ee528-faed-45c2-907e-7464ce6891f7
+		summarizeBy: none
+		sourceColumn: first_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column last_name
+		dataType: string
+		lineageTag: 5c70659d-ed8e-4fde-8df3-d15adf0e2ef8
+		summarizeBy: none
+		sourceColumn: last_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column gender
+		dataType: string
+		lineageTag: 2e8b0fd5-e380-465c-acf0-eb6ad451b199
+		summarizeBy: none
+		sourceColumn: gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column birth_date
+		dataType: dateTime
+		formatString: dd-mm-yy
+		lineageTag: 473681bc-eb8d-43ef-8e62-4572aa3faf68
+		summarizeBy: none
+		sourceColumn: birth_date
+
+		variation Variation
+			isDefault
+			relationship: f116a70b-4ca8-4f0d-8309-13805eea6ba7
+			defaultHierarchy: LocalDateTable_ddcedcb2-6f6c-4935-bf0e-b11896e9a6c7.'Date Hierarchy'
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column city
+		dataType: string
+		lineageTag: 3ccfddb2-8584-4784-9827-ee6d3ef17611
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column join_date
+		dataType: dateTime
+		formatString: dd-mm-yy
+		lineageTag: b35d0293-1b6a-49b2-9247-b10057092f3b
+		summarizeBy: none
+		sourceColumn: join_date
+
+		variation Variation
+			isDefault
+			relationship: 83ba3cb3-5ae1-4d44-b1aa-47ff8671b329
+			defaultHierarchy: LocalDateTable_c87fb433-aaff-4983-a085-887868604365.'Date Hierarchy'
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column age = DATEDIFF(dim_customers[birth_date], TODAY(), YEAR)
+		formatString: 0
+		lineageTag: 34e7604d-4143-4c56-8841-530cff76e21e
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column tenure_in_years = DATEDIFF(dim_customers[join_date], TODAY(), YEAR)
+		formatString: 0
+		lineageTag: e470c38c-4c86-4f26-964e-b871cdd76388
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column full_name = dim_customers[first_name] & " " & dim_customers[last_name]
+		lineageTag: fd0fd14a-6785-48e4-a1da-83b9026ee380
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column age_group = SWITCH(TRUE(), [Age]<25,"Under 25",[Age]<35,"25-34",[Age]<45,"35-44",[Age]<55,"45-54","55+")
+		lineageTag: 856fbbba-f62d-4570-b990-15cfbfe4e298
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column join_year_month = FORMAT(dim_customers[join_date], "MMM YYYY")
+		lineageTag: 7dbf9f67-794f-412c-9567-d6ba853d158c
+		summarizeBy: none
+		sortByColumn: join_year_month_sort
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column join_year_month_sort = YEAR(dim_customers[join_date])*100 + MONTH(dim_customers[join_date])
+		formatString: 0
+		lineageTag: 76fc8c23-3a8c-4434-ae3e-f0a1b88ad41c
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_customers = m
+		mode: import
+		queryGroup: dimensions
+		source =
+				let
+				    Source = Customers,
+				    #"Renamed Columns" = Table.RenameColumns(Source,{{"CustomerID", "customer_id"}, {"FirstName", "first_name"}, {"LastName", "last_name"}, {"Gender", "gender"}, {"BirthDate", "birth_date"}, {"City", "city"}, {"JoinDate", "join_date"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

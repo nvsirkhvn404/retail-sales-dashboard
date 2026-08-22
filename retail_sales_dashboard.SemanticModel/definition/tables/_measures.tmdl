@@ -1,0 +1,155 @@
+table _measures
+	lineageTag: 4681b104-8c6a-4d0e-9bd0-d4199e8b7b79
+
+	measure 'Total Sales' = SUMX(fact_transactions, fact_transactions[quantity] * RELATED(dim_products[unit_price]) * (1-fact_transactions[discount]))
+		displayFolder: Core
+		lineageTag: e0197ba2-1ea5-41f0-a4ad-4a6354fa674c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Cost' = SUMX(fact_transactions, fact_transactions[quantity] * RELATED(dim_products[cost_price]))
+		displayFolder: Core
+		lineageTag: ca58cf33-e9b0-4e27-a13b-6ab78b9f834b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Profit' = [Total Sales] - [Total Cost]
+		displayFolder: Core
+		lineageTag: 91eb1884-f31d-4c82-a65e-5571df6c8863
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Profit Margin %' = DIVIDE([Total Profit], [Total Sales])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Core
+		lineageTag: a00cffab-5d10-4645-82d3-f3669ae2af66
+
+	measure 'Total Quantity' = SUM(fact_transactions[quantity])
+		formatString: 0
+		displayFolder: Core
+		lineageTag: 76f0e6dd-642d-4c66-95b1-208add30ede9
+
+	measure 'Total Transactions' = DISTINCTCOUNT(fact_transactions[transaction_id])
+		formatString: 0
+		displayFolder: Core
+		lineageTag: ea5bae8d-c092-4922-ad00-29ed095cfe47
+
+	measure 'Total Customers' = DISTINCTCOUNT(fact_transactions[customer_id])
+		formatString: 0
+		displayFolder: Core
+		lineageTag: 9cee64a3-d602-49ad-929c-99a435653d32
+
+	measure 'Avg Order Value' = DIVIDE([Total Sales], [Total Transactions])
+		displayFolder: Core
+		lineageTag: 7ca1b832-13c0-42de-8b99-1e25dff91f58
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Discount %' = AVERAGE(fact_transactions[discount])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Core
+		lineageTag: 71809f11-da4c-4d11-bf3d-8cbf7cb062de
+
+	measure 'Sales LY' = CALCULATE([Total Sales], SAMEPERIODLASTYEAR('Date'[Date]))
+		displayFolder: Time Intelligence
+		lineageTag: 1f12b367-6d3e-4936-8c0c-8a5bea137882
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Sales YoY %' = DIVIDE([Total Sales]-[Sales LY], [Sales LY])
+		displayFolder: Time Intelligence
+		lineageTag: d5e48f40-ed57-4054-8515-361a439da8b7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Sales MTD' = TOTALMTD([Total Sales], 'Date'[Date])
+		displayFolder: Time Intelligence
+		lineageTag: cd48e7c7-8371-4bfe-8937-983a78509197
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Sales YTD' = TOTALYTD([Total Sales], 'Date'[Date])
+		displayFolder: Time Intelligence
+		lineageTag: 91e4a82e-e024-4fe3-9dbb-6c4e99886ab1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Rolling 3M Sales' = CALCULATE([Total Sales], DATESINPERIOD('Date'[Date], MAX('Date'[Date]), -3, MONTH))
+		displayFolder: Time Intelligence
+		lineageTag: a7b54d3d-de49-4aa0-93fb-b41372a2e127
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Customer Txn Count' = CALCULATE(DISTINCTCOUNT(fact_transactions[transaction_id]))
+		formatString: 0
+		displayFolder: Customer
+		lineageTag: caaa306c-e1af-4a41-bb28-9405dca646a4
+
+	measure 'Returning Customers' = ```
+			
+			CALCULATE(
+			    DISTINCTCOUNT(fact_transactions[customer_id]),
+			    FILTER(
+			        VALUES(fact_transactions[customer_id]),
+			        CALCULATE(DISTINCTCOUNT(fact_transactions[transaction_id])) > 1
+			    )
+			)
+			
+			```
+		formatString: 0
+		displayFolder: Customer
+		lineageTag: d20fe24f-0008-40d5-a1fc-1f1990775835
+
+	measure 'Repeat Purchase Rate' = DIVIDE([Returning Customers], [Total Customers])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Customer
+		lineageTag: cd468e8c-f529-4e30-8b12-86d7a27f7394
+
+	measure 'Customer Lifetime Value' = DIVIDE([Total Sales], [Total Customers])
+		displayFolder: Customer
+		lineageTag: 0fc23e7f-0780-4c51-bbb7-781b98bf18c3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Product Sales Rank' = ```
+			RANKX(ALL(dim_products[product_name]), [Total Sales])
+			
+			```
+		formatString: 0
+		displayFolder: Rank
+		lineageTag: 5710aa40-8dd8-476a-a23e-26c7a07bbb61
+
+	measure 'Top 10 Flag' = IF([Product Sales Rank] <= 10, 1, 0)
+		formatString: 0
+		displayFolder: Rank
+		lineageTag: d53679d0-b9e5-456b-8d90-1d2619b7987c
+
+	measure 'Store Sales Rank' = RANKX(ALL(dim_stores[store_name]), [Total Sales])
+		formatString: 0
+		displayFolder: Rank
+		lineageTag: 8334a285-4340-4c34-89e0-3cd54fb3904f
+
+	measure 'Avg Orders per Customer' = DIVIDE([Total Transactions], [Total Customers])
+		displayFolder: Customer
+		lineageTag: ddba60f8-1325-42ca-b730-01c1864e92e7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Column
+		isHidden
+		formatString: 0
+		lineageTag: eb6c2f3a-2c0d-426b-860f-b0498f534e8c
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _measures = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = da433186a4734e898cbc029b525355db
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

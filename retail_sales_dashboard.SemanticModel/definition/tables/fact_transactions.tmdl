@@ -1,0 +1,115 @@
+table fact_transactions
+	lineageTag: 7fe8234e-3b63-4329-882e-35cc2f6d39e2
+
+	column transaction_id
+		dataType: string
+		lineageTag: 1fafc7a7-b2ae-4ed7-8e46-e9cd41ae04fe
+		summarizeBy: none
+		sourceColumn: transaction_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column date
+		dataType: dateTime
+		formatString: dd-mm-yy
+		lineageTag: fbcc257a-b618-44dd-bb75-94080b005a29
+		summarizeBy: none
+		sourceColumn: date
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column customer_id
+		dataType: string
+		lineageTag: 9e6ce67d-b0e6-4fab-bb16-e9b2cfa3c37c
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_id
+		dataType: string
+		lineageTag: 7976b15e-4d26-4143-bfca-2887d7e2df46
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column store_id
+		dataType: string
+		lineageTag: b7c8ab51-fa12-4355-a0c1-79325d8c1803
+		summarizeBy: none
+		sourceColumn: store_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 9941cd7e-909e-400f-9a17-abc058467cbb
+		summarizeBy: sum
+		sourceColumn: quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column discount
+		dataType: double
+		lineageTag: 0ff1104f-a801-4c3c-8118-626270cd63f4
+		summarizeBy: sum
+		sourceColumn: discount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column payment_method
+		dataType: string
+		lineageTag: 5f0d371f-f6e0-48ec-ae6a-f9157f963e95
+		summarizeBy: none
+		sourceColumn: payment_method
+
+		annotation SummarizationSetBy = Automatic
+
+	column line_revenue = fact_transactions[quantity] * RELATED(dim_products[unit_price]) * (1 - fact_transactions[discount])
+		lineageTag: fa1fdb41-5ca1-4e43-ad7f-492ce590fcfb
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column line_cost = fact_transactions[quantity] * RELATED(dim_products[cost_price])
+		lineageTag: 80f23be0-ed8f-4e22-ae90-edd3a7b0c1a6
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column line_profit = [line_revenue] - [line_cost]
+		lineageTag: 8b34b86f-d81c-4188-a328-56844caca4d2
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fact_transactions = m
+		mode: import
+		queryGroup: facts
+		source =
+				let
+				    Source = Transactions,
+				    #"Renamed Columns" = Table.RenameColumns(Source,{{"TransactionID", "transaction_id"}, {"Date", "date"}, {"CustomerID", "customer_id"}, {"ProductID", "product_id"}, {"StoreID", "store_id"}, {"Quantity", "quantity"}, {"Discount", "discount"}, {"PaymentMethod", "payment_method"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

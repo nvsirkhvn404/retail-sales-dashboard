@@ -1,0 +1,31 @@
+relationship AutoDetected_47c38279-3b5b-4c84-9028-fabbefb8bd70
+	fromColumn: fact_transactions.customer_id
+	toColumn: dim_customers.customer_id
+
+relationship AutoDetected_aa3e8721-cdf6-462b-8d6d-56eeab73f23c
+	fromColumn: fact_transactions.product_id
+	toColumn: dim_products.product_id
+
+relationship AutoDetected_c0c5d82a-4d72-414b-9bc8-d1c8ecd45c2a
+	fromColumn: fact_transactions.store_id
+	toColumn: dim_stores.store_id
+
+relationship f116a70b-4ca8-4f0d-8309-13805eea6ba7
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_customers.birth_date
+	toColumn: LocalDateTable_ddcedcb2-6f6c-4935-bf0e-b11896e9a6c7.Date
+
+relationship 83ba3cb3-5ae1-4d44-b1aa-47ff8671b329
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_customers.join_date
+	toColumn: LocalDateTable_c87fb433-aaff-4983-a085-887868604365.Date
+
+relationship bb1938e4-b328-9f67-3846-2454910d069d
+	fromColumn: fact_transactions.date
+	toColumn: Date.Date
+
+relationship bd7d77fe-91d4-448f-9c14-44800747e31a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Date.Date
+	toColumn: LocalDateTable_217326c6-edd6-40ef-80cd-69e044bca5ae.Date
+
