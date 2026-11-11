@@ -16,8 +16,6 @@ table fact_transactions
 		summarizeBy: none
 		sourceColumn: date
 
-		changedProperty = DataType
-
 		annotation SummarizationSetBy = Automatic
 
 		annotation UnderlyingDateTimeDataType = Date

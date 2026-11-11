@@ -45,8 +45,6 @@ table dim_customers
 			relationship: f116a70b-4ca8-4f0d-8309-13805eea6ba7
 			defaultHierarchy: LocalDateTable_ddcedcb2-6f6c-4935-bf0e-b11896e9a6c7.'Date Hierarchy'
 
-		changedProperty = DataType
-
 		annotation SummarizationSetBy = Automatic
 
 		annotation UnderlyingDateTimeDataType = Date
@@ -72,8 +70,6 @@ table dim_customers
 			isDefault
 			relationship: 83ba3cb3-5ae1-4d44-b1aa-47ff8671b329
 			defaultHierarchy: LocalDateTable_c87fb433-aaff-4983-a085-887868604365.'Date Hierarchy'
-
-		changedProperty = DataType
 
 		annotation SummarizationSetBy = Automatic
 

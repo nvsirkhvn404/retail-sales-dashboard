@@ -1,9 +1,30 @@
 expression Customers =
 		let
-		    Source = Excel.Workbook(File.Contents("C:\Users\Nasir\Videos\Datasets\retail_sales_dataset.xlsx"), null, true),
-		    Customers_Sheet = Source{[Item="Customers",Kind="Sheet"]}[Data],
-		    #"Promoted Headers" = Table.PromoteHeaders(Customers_Sheet, [PromoteAllScalars=true]),
-		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"CustomerID", type text}, {"FirstName", type text}, {"LastName", type text}, {"Gender", type text}, {"BirthDate", Int64.Type}, {"City", type text}, {"JoinDate", Int64.Type}})
+		    Source = Excel.Workbook(
+		        Web.Contents("https://raw.githubusercontent.com/nvsirkhvn404/retail-sales-dashboard/main/dataset/retail_sales_dataset.xlsx"),
+		        null,
+		        true
+		    ),
+		
+		    Customers_Sheet = Source{[Item="Customers", Kind="Sheet"]}[Data],
+		
+		    #"Promoted Headers" = Table.PromoteHeaders(
+		        Customers_Sheet,
+		        [PromoteAllScalars=true]
+		    ),
+		
+		    #"Changed Type" = Table.TransformColumnTypes(
+		        #"Promoted Headers",
+		        {
+		            {"CustomerID", type text},
+		            {"FirstName", type text},
+		            {"LastName", type text},
+		            {"Gender", type text},
+		            {"BirthDate", type date},
+		            {"City", type text},
+		            {"JoinDate", type date}
+		        }
+		    )
 		in
 		    #"Changed Type"
 	lineageTag: 00493748-d117-45b4-aae3-acc921e9b4c1
@@ -15,7 +36,7 @@ expression Customers =
 
 expression Products =
 		let
-		    Source = Excel.Workbook(File.Contents("C:\Users\Nasir\Videos\Datasets\retail_sales_dataset.xlsx"), null, true),
+		    Source = Excel.Workbook(Web.Contents("https://raw.githubusercontent.com/nvsirkhvn404/retail-sales-dashboard/main/dataset/retail_sales_dataset.xlsx"), null, true),
 		    Products_Sheet = Source{[Item="Products",Kind="Sheet"]}[Data],
 		    #"Promoted Headers" = Table.PromoteHeaders(Products_Sheet, [PromoteAllScalars=true]),
 		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ProductID", type text}, {"ProductName", type text}, {"Category", type text}, {"SubCategory", type text}, {"UnitPrice", type number}, {"CostPrice", type number}})
@@ -30,7 +51,7 @@ expression Products =
 
 expression Stores =
 		let
-		    Source = Excel.Workbook(File.Contents("C:\Users\Nasir\Videos\Datasets\retail_sales_dataset.xlsx"), null, true),
+		    Source = Excel.Workbook(Web.Contents("https://raw.githubusercontent.com/nvsirkhvn404/retail-sales-dashboard/main/dataset/retail_sales_dataset.xlsx"), null, true),
 		    Stores_Sheet = Source{[Item="Stores",Kind="Sheet"]}[Data],
 		    #"Changed Type" = Table.TransformColumnTypes(Stores_Sheet,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}})
 		in
@@ -44,10 +65,32 @@ expression Stores =
 
 expression Transactions =
 		let
-		    Source = Excel.Workbook(File.Contents("C:\Users\Nasir\Videos\Datasets\retail_sales_dataset.xlsx"), null, true),
-		    Transactions_Sheet = Source{[Item="Transactions",Kind="Sheet"]}[Data],
-		    #"Promoted Headers" = Table.PromoteHeaders(Transactions_Sheet, [PromoteAllScalars=true]),
-		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"TransactionID", type text}, {"Date", Int64.Type}, {"CustomerID", type text}, {"ProductID", type text}, {"StoreID", type text}, {"Quantity", Int64.Type}, {"Discount", type number}, {"PaymentMethod", type text}})
+		    Source = Excel.Workbook(
+		        Web.Contents("https://raw.githubusercontent.com/nvsirkhvn404/retail-sales-dashboard/main/dataset/retail_sales_dataset.xlsx"),
+		        null,
+		        true
+		    ),
+		
+		    Transactions_Sheet = Source{[Item="Transactions", Kind="Sheet"]}[Data],
+		
+		    #"Promoted Headers" = Table.PromoteHeaders(
+		        Transactions_Sheet,
+		        [PromoteAllScalars=true]
+		    ),
+		
+		    #"Changed Type" = Table.TransformColumnTypes(
+		        #"Promoted Headers",
+		        {
+		            {"TransactionID", type text},
+		            {"Date", type date},
+		            {"CustomerID", type text},
+		            {"ProductID", type text},
+		            {"StoreID", type text},
+		            {"Quantity", Int64.Type},
+		            {"Discount", type number},
+		            {"PaymentMethod", type text}
+		        }
+		    )
 		in
 		    #"Changed Type"
 	lineageTag: dcd7e3fd-c162-449f-bef6-5ad62c92ed83
