@@ -11,6 +11,20 @@ This project takes a raw, multi-table retail dataset through the full BI workflo
 
 **Source data:** [Retail Sales Dataset](dataset\retail_sales_dataset.xlsx) *(adapted into a multi-table structure for this project)*
 
+## Key Business Insights
+
+- **Category Performance:** Electronics (44.17%) and Fashion (43.58%) generate 87.75% of total revenue. However, Groceries has the highest profit margin at 30.44%.
+
+- **Regional Performance:** East leads revenue with $5.60M, but West has higher average sales per store ($2.92M vs. $2.80M).
+
+- **Product Profitability:** Book Television leads in revenue ($605K), while And Footwear delivers a significantly higher profit margin (41.77%).
+
+- **Sales Growth:** January–August sales increased by 8.9% in 2025 compared with the same period in 2024.
+
+- **Payment Trends:** Revenue is distributed fairly evenly across all four payment methods, with Cash contributing the largest share (25.70%).
+
+**Key Takeaway:** Revenue concentration, product profitability, store-level performance, and comparable-period growth are the main areas highlighted by this analysis.
+
 ## Data Model
 
 Star schema with one fact table and three dimension tables, plus a dedicated date dimension for time intelligence.
