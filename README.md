@@ -2,12 +2,12 @@
 
 An interactive Power BI dashboard analyzing retail sales performance across 5 stores, 200 customers, and 50 products over a 2-year period (Sep 2023 - Sep 2025). Built as a hands-on project to practice data modelling, DAX, and dashboard design.
 
-# Dashboard Demo
+## Dashboard Demo
 ![Dashboard Demo](screenshots/dashboard-demo.gif) 
 
 ## Overview
 
-This project takes a raw, multi-table retail dataset through the full BI workflow: data cleaning, star schema modelling, DAX measure development, and interactive report design. six report pages, 20+ DAX measures, and cross-filtered slicers throughout.
+This project takes a raw, multi-table retail dataset through the full BI workflow: data cleaning, star schema modelling, DAX measure development, and interactive report design. It includes six report pages, 20+ DAX measures, and cross-filtered slicers throughout.
 
 **Source data:** [Retail Sales Dataset](dataset/retail_sales_dataset.xlsx) *(adapted into a multi-table structure for this project)*
 
@@ -96,11 +96,11 @@ All pages share a `synced filter` panel (region, category, payment method, age g
 
 ## Running This Yourself
 
-1. Clone the repo.
+1. Clone or download this repository.
 2. Open `retail_sales_dashboard.pbip` in Power BI Desktop.
-3. If prompted, point the data source to the `dataset/` folder.
-4. Refresh.
+3. On the first refresh, select Anonymous authentication if Power BI requests credentials for GitHub.
+4. Refresh the report.
 
 ---
 
-*Built as a learning project, feedbacks are welcome.*
+*Built as a learning project, feedback is welcome.*

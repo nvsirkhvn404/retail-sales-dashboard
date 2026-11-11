@@ -37,10 +37,10 @@ The tables are connected using their respective ID columns. A separate Date tabl
 
 ## Data Source
 
-The dataset was sourced from Kaggle:
+Originally sourced from:
 
-[Retail Sales Dataset](retail_sales_dataset.xlsx)
+[Retail Sales Dataset - Kaggle](https://www.kaggle.com/datasets/buharishehu/retail-sales-dataset)
 
-The Excel workbook included here is the version used in this project.
+The Excel workbook included in this repository is the version used for this project.
 
 **Note:** This is sample retail data.
