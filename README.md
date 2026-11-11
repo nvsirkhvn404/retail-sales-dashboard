@@ -2,13 +2,14 @@
 
 An interactive Power BI dashboard analyzing retail sales performance across 5 stores, 200 customers, and 50 products over a 2-year period (Sep 2023 - Sep 2025). Built as a hands-on project to practice data modelling, DAX, and dashboard design.
 
-![Executive Overview](screenshots/01-executive-overview.png)
+# Dashboard Demo
+![Dashboard Demo](screenshots/dashboard-demo.gif) 
 
 ## Overview
 
 This project takes a raw, multi-table retail dataset through the full BI workflow: data cleaning, star schema modelling, DAX measure development, and interactive report design. six report pages, 20+ DAX measures, and cross-filtered slicers throughout.
 
-**Source data:** [Retail Store Sales: Dirty for Data Cleaning](https://www.kaggle.com/datasets/buharishehu/retail-sales-dataset) *(adapted into a multi-table structure for this project)*
+**Source data:** [Retail Sales Dataset](dataset\retail_sales_dataset.xlsx) *(adapted into a multi-table structure for this project)*
 
 ## Data Model
 
@@ -63,9 +64,10 @@ All pages share a `synced filter` panel (region, category, payment method, age g
 
 ## Screenshots
 
-<details>
+<details open>
 <summary>View all pages</summary>
 
+![Overview](screenshots/01-executive-overview.png)
 ![Products](screenshots/02-products.png)
 ![Stores & Region](screenshots/03-stores-region.png)
 ![Customers](screenshots/04-customers.png)
@@ -74,16 +76,11 @@ All pages share a `synced filter` panel (region, category, payment method, age g
 
 </details>
 
-## Tools Used
-
-- Power BI Desktop (Power Query, data modelling, DAX, report design)
-- Source data cleaned and joined from Excel
-
 ## Running This Yourself
 
 1. Clone the repo.
-2. Open `retail_sales_dashboard.pbip` in Power BI Desktop (2024+ recommended, PBIP is the newer file-based project format).
-3. If prompted, point the data source to the `data/` folder.
+2. Open `retail_sales_dashboard.pbip` in Power BI Desktop.
+3. If prompted, point the data source to the `dataset/` folder.
 4. Refresh.
 
 ---
