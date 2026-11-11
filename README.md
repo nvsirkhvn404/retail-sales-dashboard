@@ -19,21 +19,25 @@ This project takes a raw, multi-table retail dataset through the full BI workflo
 
 - **Product Profitability:** Book Television leads in revenue ($605K), while And Footwear delivers a significantly higher profit margin (41.77%).
 
-- **Sales Growth:** January–August sales increased by 8.9% in 2025 compared with the same period in 2024.
+- **Sales Growth:** January-August sales increased by 8.9% in 2025 compared with the same period in 2024.
 
 - **Payment Trends:** Revenue is distributed fairly evenly across all four payment methods, with Cash contributing the largest share (25.70%).
 
 **Key Takeaway:** Revenue concentration, product profitability, store-level performance, and comparable-period growth are the main areas highlighted by this analysis.
 
+## Data Preparation
+
+The Excel workbook was imported into Power BI, where the four tables were organized into a relational data model.
+
+- **Data Preparation:** Reviewed column data types and prepared the tables for analysis.
+- **Data Modelling:** Used Transactions as the fact table, with Customers, Products, and Stores as dimension tables.
+- **Date Table:** Created a dedicated calendar table to support time-based analysis and YoY comparisons.
+
 ## Data Model
 
 Star schema with one fact table and three dimension tables, plus a dedicated date dimension for time intelligence.
 
-```
-dim_customers ─┐
-dim_products ──┼──► fact_transactions ◄── Date
-dim_stores ────┘
-```
+![Data Model](screenshots/data-model.png)
 
 | Table | Grain | Rows |
 |---|---|---|

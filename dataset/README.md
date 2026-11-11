@@ -17,7 +17,7 @@ The workbook is organized into four related tables covering sales transactions, 
 
 ## Dataset Coverage
 
-- **Time period:** September 10, 2023 – September 9, 2025
+- **Time period:** September 10, 2023 - September 9, 2025
 - **Stores:** 5 across 4 regions
 - **Customers:** 200
 - **Products:** 50
