@@ -9,7 +9,7 @@ An interactive Power BI dashboard analyzing retail sales performance across 5 st
 
 This project takes a raw, multi-table retail dataset through the full BI workflow: data cleaning, star schema modelling, DAX measure development, and interactive report design. six report pages, 20+ DAX measures, and cross-filtered slicers throughout.
 
-**Source data:** [Retail Sales Dataset](dataset\retail_sales_dataset.xlsx) *(adapted into a multi-table structure for this project)*
+**Source data:** [Retail Sales Dataset](dataset/retail_sales_dataset.xlsx) *(adapted into a multi-table structure for this project)*
 
 ## Key Business Insights
 
